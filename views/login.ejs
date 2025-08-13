@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background: linear-gradient(-45deg, #caf0f8, #fae0e4, #f1f8e9, #fdeff9);
+      background-size: 400% 400%;
+      animation: pastelMove 14s ease-in-out infinite;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    @keyframes pastelMove {
+      0% {background-position:0% 50%;}
+      50% {background-position:100% 50%;}
+      100% {background-position:0% 50%;}
+    }
+    .login-card {
+      background: rgba(255,255,255,0.83);
+      border-radius: 22px;
+      box-shadow: 0 10px 38px rgba(52,62,120,0.14), 0 1.5px 7px rgba(140,140,140,0.07);
+      backdrop-filter: blur(10px);
+      border: 1.2px solid rgba(70,200,180,0.08);
+      padding: 45px 36px 34px 36px;
+      width: 100%;
+      max-width: 360px;
+      transition: box-shadow 0.23s, transform 0.13s;
+      text-align: center;
+    }
+    .login-card:hover, .login-card:focus-within {
+      box-shadow: 0 16px 48px 0px rgba(52,170,220,0.16), 0 7px 18px rgba(70,224,170,0.09);
+      transform: scale(1.015);
+    }
+    h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 25px;
+      background: linear-gradient(90deg,#43c6ac,#191654 85%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 0.7px;
+      animation: fadeDown 0.8s cubic-bezier(.73,0,.2,1);
+    }
+    @keyframes fadeDown {
+      from {opacity:0; transform:translateY(-18px);}
+      to {opacity:1; transform:translateY(0);}
+    }
+    .login-card input[type="email"],
+    .login-card input[type="password"] {
+      width: 100%;
+      margin-bottom: 22px;
+      padding: 14px 14px;
+      border-radius: 12px;
+      border: 1.2px solid #b4cdfa;
+      background: rgba(255,255,255,0.93);
+      font-size: 1.07rem;
+      color: #273c4f;
+      box-shadow: 0 2px 8px -2px #c6d6e4;
+      outline: none;
+      transition: border 0.19s, box-shadow 0.13s;
+    }
+    .login-card input[type="email"]:focus,
+    .login-card input[type="password"]:focus {
+      border-color: #1976D2;
+      box-shadow: 0 0 6px #1976D2cc;
+    }
+    .login-card button[type="submit"] {
+      width: 100%;
+      border: none;
+      padding: 13px 0;
+      background: linear-gradient(90deg,#41d97a,#1ca7ec);
+      color: #fff;
+      font-size: 1.13rem;
+      font-weight: bold;
+      border-radius: 13px;
+      letter-spacing: 0.06em;
+      box-shadow: 0 2px 12px #6fd7b1aa;
+      margin-bottom: 10px;
+      transition: background 0.21s, box-shadow 0.21s, transform .12s;
+    }
+    .login-card button[type="submit"]:hover, .login-card button[type="submit"]:focus {
+      background: linear-gradient(90deg,#209f9f 30%,#339d53 100%);
+      box-shadow: 0 5px 18px #3bbf9eb6;
+      transform: translateY(-2px) scale(1.03);
+    }
+    .login-card p {
+      margin-top: 22px;
+      margin-bottom: 0;
+      font-size: 1.04rem;
+      color: #356164;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+    }
+    .login-card a {
+      color: #1f83c6;
+      text-decoration: underline dotted;
+      transition: color 0.16s;
+    }
+    .login-card a:hover { color: #2ec581; }
+    @media (max-width: 500px) {
+      .login-card {
+        padding: 15vw 6vw 9vw 6vw;
+        border-radius: 13px;
+      }
+      h2 { font-size: 1.3rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-card">
+    <h2>User Login</h2>
+
+    <% if (message) { %>
+      <p style="color: green;"><%= message %></p>
+    <% } %>
+
+    <form action="/login" method="POST">
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <button type="submit">Login</button>
+    </form>
+
+    <p>New user? <a href="/register">Register here</a></p>
+  </div>
+</body>
+</html>

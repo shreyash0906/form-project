@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background: linear-gradient(-45deg, #caf0f8, #fae0e4, #f1f8e9, #fdeff9);
+      background-size: 400% 400%;
+      animation: pastelMove 14s ease-in-out infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    @keyframes pastelMove {
+      0% {background-position:0% 50%;}
+      50% {background-position:100% 50%;}
+      100% {background-position:0% 50%;}
+    }
+    .dashboard-container {
+      background: rgba(255,255,255,0.82);
+      max-width: 700px;
+      width: 98vw;
+      margin: 32px auto;
+      border-radius: 24px;
+      box-shadow: 0 10px 40px rgba(52,62,120,0.17), 0 1.5px 7px rgba(140,140,140,0.06);
+      backdrop-filter: blur(11px);
+      border: 1.3px solid rgba(70,200,180,0.08);
+      padding: 44px 34px 35px 34px;
+      position: relative;
+    }
+    h1 {
+      text-align: center;
+      font-weight: 700;
+      font-size: 2.3rem;
+      background: linear-gradient(90deg,#43c6ac,#191654 85%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      margin-bottom: 30px;
+    }
+    h3 {
+      color: #1976D2;
+      font-weight: 600;
+      margin-bottom: 17px;
+    }
+    #userList .list-group-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    /* Logout button style */
+    .logout-btn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background-color: #ff4d4f;
+      color: white;
+      padding: 8px 14px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background 0.3s;
+    }
+    .logout-btn:hover {
+      background-color: #d9363e;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <a href="/logout" class="logout-btn">Logout</a>
+
+    <h1>User Dashboard</h1>
+
+    <h3>All Users</h3>
+    <ul id="userList" class="list-group">
+      <% users.forEach(user => { %>
+        <li class="list-group-item">
+          <span><%= user.name %> (Age: <%= user.age %>)</span>
+          <button class="btn btn-danger btn-sm delete-btn" data-id="<%= user._id %>">Delete</button>
+        </li>
+      <% }) %>
+    </ul>
+  </div>
+
+  <script>
+    document.querySelectorAll('.delete-btn').forEach(button => {
+      button.addEventListener('click', function () {
+        const userId = this.getAttribute('data-id');
+        if (!confirm("Are you sure you want to delete this user?")) return;
+
+        fetch(`/delete-user/${userId}`, { method: 'DELETE' })
+          .then(res => res.json())
+          .then(data => {
+            if (data.success) {
+              alert(data.message || "User deleted successfully");
+              this.closest('li').remove();
+            } else {
+              alert("Failed to delete user");
+            }
+          })
+          .catch(err => console.error(err));
+      });
+    });
+  </script>
+</body>
+</html>
